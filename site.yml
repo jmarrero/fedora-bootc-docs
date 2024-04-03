@@ -1,6 +1,6 @@
 site:
   title: Local Preview
-  start_page: fedora-coreos::index.adoc
+  start_page: fedora-bootc::index.adoc
 content:
   sources:
   - url: .
@@ -10,6 +10,12 @@ ui:
     url: https://gitlab.com/fedora/docs/docs-website/ui-bundle/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
     snapshot: true
   default_layout: with_menu
+  supplemental_files:
+  - path: ui.yml
+    contents: |
+      static_files:
+      - .nojekyll
+  - path: .nojekyll
 output:
   clean: true
   dir: ./public

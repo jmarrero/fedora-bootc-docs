@@ -1,7 +1,7 @@
 # Automatically modified by update-versions.py; comments will not be preserved
 
-name: fedora-coreos
-title: Fedora CoreOS
+name: fedora-bootc
+title: Fedora bootc
 version: master
 start_page: ROOT:index.adoc
 nav:
