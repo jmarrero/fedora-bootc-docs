@@ -7,6 +7,6 @@ Its goal is to provide a host system easily configurable via container
 tooling, usable as a container host, but also to allow non-containerized
 deployments with applications bound to the host context.
 
-Fedora bootc is an open source project associated with the link:https://fedoraproject.org/[Fedora Project].
+Fedora bootc is an open source project associated with the link:https://fedoraproject.org/[Fedora Project] and the link:https://www.centos.org[CentOS Project].
 
 xref:getting-started.adoc[Get started using Fedora bootc!]

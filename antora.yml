@@ -9,4 +9,5 @@ nav:
 asciidoc:
   attributes:
     container-c9s: quay.io/centos-bootc/centos-bootc:stream9
-    container-fedora: registry.gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base/fedora-bootc-full:40
+    container-fedora-full: registry.gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base/fedora-bootc-full:40
+    container-fedora-minimal: registry.gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base/fedora-bootc-full:40

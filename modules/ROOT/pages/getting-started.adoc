@@ -7,18 +7,14 @@ are designed for use with the https://github.com/containers/bootc[bootc project]
 
 === Container Images
 
-- `quay.io/centos-bootc/centos-bootc:stream9` (CentOS Stream 9)
+These are the two "full" container images:
 
-This is in development, see [Fedora bootc](https://gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base) but as
-of right now:
-
-- ``
-- `registry.gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base/fedora-bootc-minimal:40`
+- {container-c9s} (CentOS Stream 9)
+- {container-fedora-full} (Fedora 40)
 
 === Provisioning Philosophy
 
-It is generally expected that you create a *custom* container image, derived from one of our base images
-for deployment.
+It is generally expected that you create a *custom* container image, derived from one of our base images for deployment.
 
 For more information on configuration, refer to the documentation for xref:producing-ign.adoc[Producing an Ignition File].
 

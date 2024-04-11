@@ -1,17 +1,7 @@
 = Setting a Hostname
 
-To set a custom hostname for your system, use the following Butane config to write to `/etc/hostname`:
-
-[source,yaml,subs="attributes"]
-----
-variant: fcos
-version: {butane-latest-stable-spec}
-storage:
-  files:
-    - path: /etc/hostname
-      mode: 0644
-      contents:
-        inline: myhostname
-----
+To set a custom hostname for your system, write to the `/etc/hostname`
+file, which acts as machine-specific state.  This can be done
+via Anaconda, or with a privileged container.
 
 Once booted, you can also verify that the desired hostname has been set using `hostnamectl`.

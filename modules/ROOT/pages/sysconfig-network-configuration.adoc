@@ -34,7 +34,7 @@ NetworkManager ships a tool, https://networkmanager.dev/docs/api/latest/nm-initr
 
 Here's an example of generating keyfiles for a bond via `nm-initrd-generator`:
 
-[source, bash]
+[source,bash,subs="attributes"]
 ----
 $ podman run --rm -ti {container-c9s} /usr/libexec/nm-initrd-generator -s -- "ip=bond0:dhcp bond=bond0:ens2,ens3:mode=active-backup,miimon=100 nameserver=8.8.8.8"
 

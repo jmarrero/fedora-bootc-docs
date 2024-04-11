@@ -1,0 +1,51 @@
+= Base images
+
+This project closely tracks CentOS and Fedora, and aims
+to tightly integrate with their underlying lifecycle as
+well as release and test infrastructure.
+
+CentOS Stream:
+
+--
+- {container-c9s} (CentOS Stream 9)
+--
+
+Source project: https://github.com/centos/centos-bootc[CentOS bootc].
+
+Fedora:
+
+- {container-fedora-full}
+- {container-fedora-minimal}
+
+Source project: https://gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base[Fedora bootc].
+
+== "full" image philosophy
+
+The content set for the "full" image includes:
+
+- A complete generic kernel and `linux-firmware`; the exact same container image
+  can be booted on physical hardware and virtual environments.
+- `dnf`: You can use this to install packages, the same as the "application"
+  container image (e.g. the same as `quay.io/centos/centos:stream9`)
+- `bootc`: Included in the container to perform in-place upgrades "day 2"
+- `NetworkManager`: Full support for many complex networking types
+- `podman`: Support for OCI containers
+- Filesystem tools, support for LUKS, LVM, RAID etc.
+- Lots of other supporting tools, such as `sos`, `jq` etc.
+
+This image is intentionally pretty large; the goal is usability
+
+
+== `minimal` image philosophy
+
+This image has almost nothing; just `kernel systemd bootc`; everything
+else (including e.g. networking) you need to add.
+
+== No cloud agents by default
+
+However, the image does *not* include hypervisor specific agents.  For more
+on this, see [Cloud Agents](cloud-agents.md); you may install them in
+derived builds.
+
+For example, on Amazon Web Services, you may want to install `cloud-init`; but this
+is also not required.

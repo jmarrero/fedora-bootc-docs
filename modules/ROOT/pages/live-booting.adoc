@@ -3,7 +3,7 @@
 
 The Fedora CoreOS live environment is a fully functional copy of Fedora CoreOS. It can provision itself via Ignition, execute containers, and so on. The live environment can be used to xref:bare-metal.adoc[install Fedora CoreOS to disk], and can also be used to run Fedora CoreOS directly from RAM.
 
-This guide shows how to boot a transient Fedora CoreOS (FCOS) system via ISO, PXE, or iPXE. For more about the live ISO and PXE images, see the xref:live-reference.adoc[live image reference].
+This guide shows how to boot a transient Fedora CoreOS (FCOS) system via ISO, PXE, or iPXE.  For more about the live ISO and PXE images, see the xref:live-reference.adoc[live image reference].
 
 == Prerequisites
 
