@@ -1,16 +1,12 @@
-= Fedora CoreOS Documentation
+= Fedora/CentOS bootc Documentation
 
-image::welcomefedoracoreos.jpg[]
+The Fedora/CentOS bootc project generates reference "base images" that
+are designed for use with the https://github.com/containers/bootc[bootc project].
 
-Fedora CoreOS is an automatically updating, minimal, monolithic, container-focused operating system, designed for clusters but also operable standalone, optimized for Kubernetes but also great without it.
-Its goal is to provide the best container host to run containerized workloads securely and at scale.
+Its goal is to provide a host system easily configurable via container
+tooling, usable as a container host, but also to allow non-containerized
+deployments with applications bound to the host context.
 
-Fedora CoreOS is an open source project associated with the link:https://fedoraproject.org/[Fedora Project].
+Fedora bootc is an open source project associated with the link:https://fedoraproject.org/[Fedora Project].
 
-[NOTE]
-====
-Please refer to the xref:faq.adoc[FAQ] for more information.
-If you want to help or ask any questions, join the link:https://chat.fedoraproject.org/#/room/#coreos:fedoraproject.org[Matrix room], or join our link:https://discussion.fedoraproject.org/tag/coreos[discussion board].
-====
-
-xref:getting-started.adoc[Get started using Fedora CoreOS!]
+xref:getting-started.adoc[Get started using Fedora bootc!]

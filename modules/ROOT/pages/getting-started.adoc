@@ -7,16 +7,12 @@ are designed for use with the https://github.com/containers/bootc[bootc project]
 
 === Container Images
 
-## Available images (CentOS Stream 9)
-
 - `quay.io/centos-bootc/centos-bootc:stream9` (CentOS Stream 9)
-
-## Available base images (Fedora)
 
 This is in development, see [Fedora bootc](https://gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base) but as
 of right now:
 
-- `registry.gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base/fedora-bootc-full:40`
+- ``
 - `registry.gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base/fedora-bootc-minimal:40`
 
 === Provisioning Philosophy
@@ -30,8 +26,7 @@ For more information on configuration, refer to the documentation for xref:produ
 
 === Running as a container
 
-You can run any of the containers via any OCI compliant runtime, such as `podman`, `docker` etc.
-The images are configured to launch systemd by default.
+include::getting-started-container.adoc[]
 
 === Booting on a local hypervisor
 
@@ -41,7 +36,7 @@ include::getting-started-local-virt.adoc[]
 
 include::getting-started-aws.adoc[]
 
-=== Exploring the OS
+=== Exploring the OS for the first time
 
 By design, there are no hard-coded default credentials or non-root interactive users.
 
@@ -51,6 +46,17 @@ If you set up an xref:authentication.adoc[SSH key], you can SSH into the VM and 
 ----
 ssh root@<ip address>
 ----
+
+=== Key related projects
+
+- https://github.com/containers/bootc[bootc]
+- https://github.com/osbuild/bootc-image-builder[bootc-image-builder]
+- https://gitlab.com/bootc-org/podman-bootc-cli[podman-bootc-cli]
+
+Established key related and included projects:
+
+- https://github.com/containers/podman[podman]
+- https://systemd.io[systemd]
 
 == Getting in touch
 

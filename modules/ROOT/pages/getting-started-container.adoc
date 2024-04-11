@@ -1,0 +1,24 @@
+:page-partial:
+
+You can run any of the containers via any OCI compliant runtime, such as `podman`, `docker` etc.
+The images are configured to launch systemd by default, but in order to just inspect
+the system you will likely want to invoke e.g. `bash`:
+
+```
+$ podman run --rm -ti quay.io/centos-bootc/centos-bootc:stream9 bash
+bash-5.1# rpm -q kernel systemd podman bootc
+kernel-5.14.0-432.el9.aarch64
+systemd-252-32.el9.aarch64
+podman-5.0.0-1.el9.aarch64
+bootc-0.1.7-1.el9.aarch64
+bash-5.1# 
+```
+
+If you invoke the container without `bash`, it is configured
+to run `/sbin/init` by default, which is not configured
+to auto-login on the console.  You would need to e.g.
+```
+$ podman exec -ti wizardly_kare bash
+```
+
+to get an interactive shell (replace `wizardly_kare` with the actual container name).

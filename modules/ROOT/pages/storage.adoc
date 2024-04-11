@@ -6,11 +6,51 @@ Fedora bootc is a container image that can be "materialized" into a disk image i
 - bootc-image-builder
 - `bootc install`
 
+== Included storage technologies
+
+The `full` images include support for:
+
+- `xfs`/`ext4`
+- `btrfs` (Fedora only)
+- LVM
+- LUKS
+
+But you can of course add other storage packages directly to the host system.
+
+=== Storage with Anaconda
+
+You can use https://docs.fedoraproject.org/en-US/fedora/f36/install-guide/advanced/Kickstart_Installations/[Kickstart]
+to configure storage with Anaconda.
+
+=== Storage with bootc-image-builder
+
+You can use the https://github.com/osbuild/bootc-image-builder[bootc-image-builder] bootc-image-builder` tool to create a disk image; in the future more storage configuration will be supported
+
+=== Storage with `bootc install`
+
+See https://containers.github.io/bootc/bootc-install.html[bootc install] for more information.
+The `bootc install to-disk` can be used to directly write a "simple" flat storage configuration
+(CentOS: default is `xfs`, Fedora: default is `btrfs`) to a disk.
+
+More advanced installations (especially to bare metal) can also
+be done via https://containers.github.io/bootc/man/bootc-install-to-filesystem.html[bootc install to-filesystem];
+you can set up the target block storage and filesystem however
+you desire via external tools, then have your custom container
+image "self-install" to it.
+
 == Mounted Filesystems
 
 Fedora bootc uses the bootc upstream project which currently uses ostree as a backend.  
 
 For more on the filesystem layout, see https://containers.github.io/bootc/filesystem.html[bootc filesystem].
+
+=== Differences from other OSTree-based systems
+
+The Fedora bootc project enables `composefs` for storage by default.  The
+`/opt` and `/usr/local` paths are plain directories, and *not*
+symbolic links into `/var`.  This means it is easier to install
+3rd-party content in derived container images that write into `/opt`
+for example.
 
 === Version selection and bootup
 

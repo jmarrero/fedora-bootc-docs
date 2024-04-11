@@ -8,7 +8,5 @@ nav:
 - modules/ROOT/nav.adoc
 asciidoc:
   attributes:
-    stable-version: 39.20240309.3.0
-    ignition-version: 2.18.0
-    butane-version: 0.20.0
-    butane-latest-stable-spec: 1.5.0
+    container-c9s: quay.io/centos-bootc/centos-bootc:stream9
+    container-fedora: registry.gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base/fedora-bootc-full:40

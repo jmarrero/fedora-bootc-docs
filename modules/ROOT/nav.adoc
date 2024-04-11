@@ -12,8 +12,6 @@
 ** xref:proxy.adoc[Proxied Internet Access]
 ** xref:sysconfig-setting-keymap.adoc[Setting Keyboard Layout]
 ** xref:customize-nic.adoc[How to Customize a NIC Name]
-** xref:sysconfig-configure-swaponzram.adoc[Configuring SwapOnZRAM]
-** xref:sysconfig-configure-wireguard.adoc[Configuring WireGuard]
 ** xref:kernel-args.adoc[Modifying Kernel Arguments]
 ** xref:counting.adoc[Node counting]
 ** xref:time-zone.adoc[Configuring Time Zone]
