@@ -1,0 +1,19 @@
+:page-partial:
+
+
+The https://gitlab.com/bootc-org/podman-bootc-cli[podman-bootc-cli] tool streamlines
+a local virtualization experience.
+
+This command will "self-install" the container into a disk image behind
+the scenes, and launch an interactive SSH session.
+
+```
+$ podman-bootc run quay.io/centos-bootc/centos-bootc:stream9
+```
+
+Other useful commands include:
+
+- `podman-bootc list`
+- `podman-bootc ssh`
+- `podman-bootc rm`
+

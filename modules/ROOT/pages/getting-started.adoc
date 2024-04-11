@@ -1,55 +1,62 @@
-= Getting Started with Fedora CoreOS
+= Getting Started with Fedora/CentOS bootc
 
 == Introduction
 
-=== Streams
+The Fedora/CentOS bootc project generates reference "base images" that
+are designed for use with the https://github.com/containers/bootc[bootc project].
 
-There are three Fedora CoreOS (FCOS) update streams available: `stable`, `testing`, and `next`. In general, you will want to use `stable`, but it is recommended to run some machines on `testing` and `next` as well and provide feedback.
+=== Container Images
 
-Each stream has a canonical URL representing its current state in JSON format, known as "stream metadata". For example, the stream metadata URL for `stable` is: https://builds.coreos.fedoraproject.org/streams/stable.json
+## Available images (CentOS Stream 9)
 
-For automating Fedora CoreOS installations, it is expected that you will interact with stream metadata. While Fedora CoreOS does automatic in-place updates, it is generally recommended to start provisioning new machines from the latest images.
+- `quay.io/centos-bootc/centos-bootc:stream9` (CentOS Stream 9)
 
-For more information on using stream metadata, see xref:stream-metadata.adoc[Stream Metadata].
-For more about the available streams, see xref:update-streams.adoc[Update Streams].
+## Available base images (Fedora)
+
+This is in development, see [Fedora bootc](https://gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base) but as
+of right now:
+
+- `registry.gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base/fedora-bootc-full:40`
+- `registry.gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base/fedora-bootc-minimal:40`
 
 === Provisioning Philosophy
 
-Fedora CoreOS does not have a separate install disk. Instead, every instance starts from a generic disk image which is customized on first boot via https://github.com/coreos/ignition[Ignition].
-
-Each platform has specific logic to retrieve and apply the first boot configuration. For cloud deployments, Ignition gathers the configuration via user-data mechanisms. In the case of bare metal, Ignition can fetch its configuration from the disk or from a remote source.
+It is generally expected that you create a *custom* container image, derived from one of our base images
+for deployment.
 
 For more information on configuration, refer to the documentation for xref:producing-ign.adoc[Producing an Ignition File].
 
 == Quickstart
 
+=== Running as a container
+
+You can run any of the containers via any OCI compliant runtime, such as `podman`, `docker` etc.
+The images are configured to launch systemd by default.
+
+=== Booting on a local hypervisor
+
+include::getting-started-local-virt.adoc[]
+
 === Booting on a cloud VM (AWS example)
 
 include::getting-started-aws.adoc[]
 
-A more complete example that allows customization is described in xref:provisioning-aws.adoc[].
-
-=== Booting on a local hypervisor (libvirt example)
-
-include::getting-started-libvirt.adoc[]
-
 === Exploring the OS
 
-Once the VM has finished booting, its IP addresses will appear on the console. By design, there are no hard-coded default credentials.
+By design, there are no hard-coded default credentials or non-root interactive users.
 
-If you set up an xref:authentication.adoc[SSH key] for the default `core` user, you can SSH into the VM and explore the OS:
+If you set up an xref:authentication.adoc[SSH key], you can SSH into the VM and explore the OS:
 
 [source, bash]
 ----
-ssh core@<ip address>
+ssh root@<ip address>
 ----
 
 == Getting in touch
 
-We recommend that all users subscribe to the low-volume https://lists.fedoraproject.org/archives/list/coreos-status@lists.fedoraproject.org/[coreos-status mailing list] for operational notices related to Fedora CoreOS.
+Bugs can be reported to:
 
-Bugs can be reported to the https://github.com/coreos/fedora-coreos-tracker[Fedora CoreOS Tracker].
+- Fedora: <https://gitlab.com/bootc-org/fedora-bootc/fedora-bootc-base>
+- CentOS: <https://github.com/CentOS/centos-bootc/>
 
-For live questions, feel free to reach out in the https://chat.fedoraproject.org/#/room/#coreos:fedoraproject.org[#coreos:fedoraproject.org room on Matrix].
-
-For doubts and longer discussions related to Fedora CoreOS, a https://discussion.fedoraproject.org/tag/coreos[forum] and a https://lists.fedoraproject.org/archives/list/coreos@lists.fedoraproject.org/[mailing list] are available.
+For longer discussions related to Fedora bootc, use the https://discussion.fedoraproject.org/tag/bootc[forum].

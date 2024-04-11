@@ -81,7 +81,7 @@ build () {
             echo ""
             echo "This build script is using Podman to run the build in an isolated environment."
             echo ""
-            podman run --rm -it -v $(pwd):/antora:z $image $cmd --stacktrace
+            ${PODMAN:-podman} run --rm -it -v $(pwd):/antora:z $image $cmd --stacktrace
 
         elif [ -n "$(command -v docker)" ]; then
             echo ""
