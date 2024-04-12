@@ -1,0 +1,70 @@
+= How to build derived bootc container images
+
+The original Docker container model of using "layers" to model
+applications has been extremely successful.  This project
+aims to apply the same technique for bootable host systems - using
+standard OCI/Docker containers as a transport and delivery format
+for base operating system updates.
+
+== Lifecycle binding code and configuration
+
+At the current time, the role of `bootc` is solely to boot and
+upgrade from a single container image.  This is a very simplistic
+model, but it is one that captures many use cases.
+
+In particular, the default assumption is that *code* and *configuration*
+for the base OS are tightly bound.  Systems which update
+one or the other asynchronously often lead to problems with
+skew.
+
+
+=== Containerized vs 1:1 host:app
+
+A webserver is the classic case of something that can be run
+as a container on a generic host alongside other workloads. 
+However, many systems today still follow a "1:1" model between application
+and a virtual machine.  Migrating to a container build for
+this can be an important stepping stone into eventually
+lifting the workload into an application container itself.
+
+Additionally in practice, even some containerized workloads
+have such strong bindings/requirememnts for the host system
+that they effectively require a 1:1 binding.  Production
+databases often fall into this class.
+
+=== httpd
+
+Nevertheless, here's a classic static http webserver example;
+an illustrative aspect is that we move content from `/var` into `/usr`.
+
+[source,dockerfile,subs="attributes"]
+----
+FROM {container-c9s}
+# The default package drops content in /var/www, and on bootc systems
+# we have /var as a machine-local mount by default.  Because this content
+# should be read-only (at runtime) and versioned with the container image,
+# we move it to /usr/share/www instead.
+RUN dnf -y install httpd && \
+    systemctl enable httpd && \
+    mv /var/www /usr/share/www && \
+    sed -ie 's,/var/www,/usr/share/www,' /etc/httpd/conf/httpd.conf
+# Further, we also disable the default index.html which includes the operating
+# system information (bad idea from a fingerprinting perspective), and crucially
+# we inject our own content as part of the container image build.
+# This is a key point: In this model, the webserver content is lifecycled exactly
+# with the container image build, and you can change it "day 2" by updating
+# the image.  The content is underneath the /usr readonly bind mount - it
+# should not be mutated per machine.
+RUN rm /usr/share/httpd/noindex -rf
+COPY index.html /usr/share/www/html
+EXPOSE 80
+----
+
+== General configuration guidance
+
+See the https://containers.github.io/bootc/building/guidance.html[bootc upstream guidance].
+
+Many configuration changes to a Linux system boil down effectively to
+writing configuration files into `/etc` or `/usr` - those operations
+translate seamlessly into booted hosts via a `COPY` instruction
+or similar in a container build.

@@ -1,7 +1,9 @@
 * xref:getting-started.adoc[Getting Started]
 * Available Containers
 ** xref:base-images.adoc[Base images]
+* Provisioning machines
 ** xref:bare-metal.adoc[Installing on Bare Metal]
+** xref:provisioning-aws.adoc[Installing on AWS]
 * System Configuration
 ** xref:authentication.adoc[Configuring Users and Groups]
 ** xref:storage.adoc[Configuring Storage]
@@ -11,11 +13,8 @@
 ** xref:hostname.adoc[Setting a Hostname]
 ** xref:proxy.adoc[Proxied Internet Access]
 ** xref:sysconfig-setting-keymap.adoc[Setting Keyboard Layout]
-** xref:customize-nic.adoc[How to Customize a NIC Name]
 ** xref:kernel-args.adoc[Modifying Kernel Arguments]
 ** xref:counting.adoc[Node counting]
-** xref:time-zone.adoc[Configuring Time Zone]
-** xref:grub-password.adoc[Setting a GRUB password]
 * OS updates
 ** xref:auto-updates.adoc[Auto-Updates]
 ** xref:bootloader-updates.adoc[Bootloader Updates]
@@ -25,4 +24,3 @@
 * Reference pages
 * Projects documentation
 ** https://github.com/containers/bootc[bootc]
-* xref:faq.adoc[FAQ]

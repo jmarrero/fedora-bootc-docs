@@ -28,10 +28,6 @@ include::getting-started-container.adoc[]
 
 include::getting-started-local-virt.adoc[]
 
-=== Booting on a cloud VM (AWS example)
-
-include::getting-started-aws.adoc[]
-
 === Exploring the OS for the first time
 
 By design, there are no hard-coded default credentials or non-root interactive users.
