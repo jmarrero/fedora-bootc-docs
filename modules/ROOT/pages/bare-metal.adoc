@@ -12,7 +12,6 @@ but this is not a hard requirement.
 
 Fedora bootc can be installed using https://anaconda-installer.readthedocs.io/en/latest/[Anaconda].
 
-
 == Installing from the network
 
 The `ostreecontainer` kickstart verb can be used to provision your custom container image.

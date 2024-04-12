@@ -1,6 +1,6 @@
 = Auto-Updates and Manual Rollbacks
 
-Fedora bootc provides atomic updates and rollbacks via github.com/containers/bootc[bootc] deployments.
+Fedora bootc provides atomic updates and rollbacks via https://github.com/containers/bootc[bootc] deployments.
 
 By default, the OS performs continual auto-updates via a stock copy of the upstream
 `bootc-fetch-apply-updates.timer` and corresponding `bootc-fetch-apply-updates.service`.

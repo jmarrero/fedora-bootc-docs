@@ -6,9 +6,29 @@ There are no default interactive users other than `root` in the base image.
 
 == Creating a New User
 
-There is no one single way to create unprivileged users.  When installing
-via e.g. Anaconda or TODO BIB
+There are multiple mechanisms to create unprivileged users.
+
+=== Local interactive users
+
+When installing via Anaconda, or when injecting a bootc-image-builder `config.json`,
+or if tooling like `cloud-init` is in use, or in general anything that ultimately
+invokes `useradd` at runtime on the target system, these users become
+"local mutable state", with entries in `/etc/passwd` and `/var/home/$user`.
+
+=== Local system users
+
+The https://www.freedesktop.org/software/systemd/man/latest/systemd-sysusers.html[systemd-sysusers]
+process also runs on each boot, adding local mutable users starting
+from the definitions in the image.
+
+=== Embedded system users
+
+The base images use https://github.com/aperezdc/nss-altfiles[nss-altfiles], with some statically-allocated users
+in `/usr/lib/passwd` and `/usr/lib/group` that are part of the immutable
+base.  It is possible to extend this in derived builds; however,
+using either systemd `DynamicUser=yes` or
+https://systemd.io/USER_RECORD/[JSON user records] for users is preferred.
 
 == Upstream bootc user/group recommendations
 
-See https://containers.github.io/bootc/building/users-and-groups.html[bootc generic user/group guidance].
+For more, see https://containers.github.io/bootc/building/users-and-groups.html[bootc generic user/group guidance].

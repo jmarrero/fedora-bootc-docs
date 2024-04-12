@@ -1,105 +1,27 @@
 = Modifying Kernel Arguments
 
-== Modifying Kernel Arguments via Ignition
+== Modifying Kernel Arguments via Anaconda
 
-You can specify kernel arguments in a Butane config using the `kernel_arguments` section.
+The anaconda `bootloader` verb can be used to configure kernel arguments.
 
-=== Example: Staying on cgroups v1
+== Modifying Kernel Arguments via bootc install
 
-Starting from June 2021, cgroups v2 is the default on new installations of Fedora CoreOS. Here's an example `kernelArguments` section which adds the `systemd.unified_cgroup_hierarchy=0` kernel argument so that the machine keeps using cgroups v1:
-
-[source,yaml,subs="attributes"]
-----
-variant: fcos
-version: {butane-latest-stable-spec}
-kernel_arguments:
-  should_exist:
-    - systemd.unified_cgroup_hierarchy=0
-----
-
-=== Example: Disabling all CPU vulnerability mitigations
-
-Here's an example `kernelArguments` section which switches `mitigations=auto,nosmt` to `mitigations=off` to disable all CPU vulnerability mitigations:
-
-[source,yaml,subs="attributes"]
-----
-variant: fcos
-version: {butane-latest-stable-spec}
-kernel_arguments:
-  should_exist:
-    - mitigations=off
-  should_not_exist:
-    - mitigations=auto,nosmt
-----
+When using `bootc install`, it is possible to add install-time kernel arguments
+both in the container image, and via `bootc install --karg`.  There is
+https://github.com/containers/bootc/pull/401[work in progress] to add
+"day 2 updatable" kernel arguments.
 
 == Modifying Kernel Arguments on Existing Systems
 
-Kernel arguments changes are managed by `rpm-ostree` via the https://www.mankier.com/1/rpm-ostree[`rpm-ostree kargs`] subcommand. Changes are applied to a new deployment and a reboot is necessary for those to take effect.
-
-=== Adding kernel arguments
-
-You can append kernel arguments. An empty value for an argument is allowed:
+The canonical kernel arguments are maintained in `/boot/loader/entries`.  While
+the `/boot` filesystem is expected to be mounted read-only by default, it is
+supported to edit these files directly:
 
 [source,bash]
 ----
-$ sudo rpm-ostree kargs --append=KEY=VALUE
+$ unshare -m /bin/bash -c 'mount -o remount,rw /boot; bash'
+$ vi /boot/loader/entries/...
 ----
 
-.Example: Add reserved memory for Kdump support
-
-[source,bash]
-----
-$ sudo rpm-ostree kargs --append='crashkernel=256M'
-----
-
-See also xref:debugging-kernel-crashes.adoc[Debugging kernel crashes using kdump].
-
-=== Removing existing kernel arguments
-
-You can delete a specific kernel argument key/value pair or an entire argument with a single key/value pair:
-
-[source,bash]
-----
-$ sudo rpm-ostree kargs --delete=KEY=VALUE
-----
-
-.Example: Re-enable SMT on vulnerable CPUs
-
-[source,bash]
-----
-$ sudo rpm-ostree kargs --delete=mitigations=auto,nosmt
-----
-
-.Example: Update an existing system from cgroupsv1 to cgroupsv2 and immediately reboot
-
-[source,bash]
-----
-$ sudo rpm-ostree kargs --delete=systemd.unified_cgroup_hierarchy --reboot
-----
-
-=== Replacing existing kernel arguments
-
-You can replace an existing kernel argument with a new value. You can directly use `KEY=VALUE` if only one value exists for that argument. Otherwise, you can specify the new value using the following format:
-
-[source,bash]
-----
-$ sudo rpm-ostree kargs --replace=KEY=VALUE=NEWVALUE
-----
-
-.Example: Disable all CPU vulnerability mitigations
-
-[source,bash]
-----
-$ sudo rpm-ostree kargs --replace=mitigations=auto,nosmt=off
-----
-
-This switches `mitigations=auto,nosmt` to `mitigations=off` to disable all CPU vulnerability mitigations.
-
-=== Interactive editing
-
-To use an editor to modify the kernel arguments:
-
-[source,bash]
-----
-$ sudo rpm-ostree kargs --editor
-----
+It is better of course to ensure that kernel arguments are set as
+part of the container build.

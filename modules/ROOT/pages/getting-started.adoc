@@ -16,7 +16,7 @@ These are the two "full" container images:
 
 It is generally expected that you create a *custom* container image, derived from one of our base images for deployment.
 
-For more information on configuration, refer to the documentation for xref:producing-ign.adoc[Producing an Ignition File].
+For more information on configuration, refer to the documentation for xref:building-containers.adoc[Building containers].
 
 == Quickstart
 
