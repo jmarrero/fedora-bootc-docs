@@ -1,15 +1,39 @@
 = Modifying Kernel Arguments
 
-== Modifying Kernel Arguments via Anaconda
+== Install time kernel arguments with Anaconda
 
 The anaconda `bootloader` verb can be used to configure kernel arguments.
+Note that like everything else configured via Anaconda,
+once set these arguments become "unmanaged" machine-specific
+state.
 
-== Modifying Kernel Arguments via bootc install
+== Install time kernel arguments with bootc-image-builder
+
+The bootc install configuration file supports
+`customizations.kernel.append`.  See
+https://github.com/osbuild/bootc-image-builder/pull/351[this pull request].
+
+Note that like everything else set via the bootc-image-builder
+install config, once set these arguments become "unmanaged" machine-specific
+state.
+
+== Modifying Kernel Arguments via bootc install configs
 
 When using `bootc install`, it is possible to add install-time kernel arguments
 both in the container image, and via `bootc install --karg`.  There is
 https://github.com/containers/bootc/pull/401[work in progress] to add
 "day 2 updatable" kernel arguments.
+
+Part of the longer term design is that both Anaconda and bootc-image-builder
+will start internally using `bootc install to-filesystem` code, and
+hence also gain support for bootc install configuration.
+
+https://github.com/osbuild/bootc-image-builder/issues/18[bootc-image-builder tracker]
+https://github.com/rhinstaller/anaconda/discussions/5197[Anaconda]
+
+Note that like Anaconda and bootc-image-builder, the `bootc install`
+configuration is applied exactly once at install time, and thereafter
+becomes machine specific state.
 
 == Modifying Kernel Arguments on Existing Systems
 
@@ -20,8 +44,16 @@ supported to edit these files directly:
 [source,bash]
 ----
 $ unshare -m /bin/bash -c 'mount -o remount,rw /boot; bash'
-$ vi /boot/loader/entries/...
+$ $editor /boot/loader/entries/...
 ----
 
-It is better of course to ensure that kernel arguments are set as
-part of the container build.
+Note that doing so will currently change the *existing* bootloader entry.
+
+The current base images do include `rpm-ostree` which has
+`rpm-ostree kargs`; however, it is likely that `rpm-ostree`
+will be dropped from the default base image.
+
+== Future: kernel arguments managed via container updates ==
+
+https://github.com/containers/bootc/issues/255[tracks adding] support for
+changing kernel arguments via container updates.
