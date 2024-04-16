@@ -1,0 +1,42 @@
+= The initial RAM disk
+
+This image uses https://github.com/dracutdevs/dracut[dracut]
+to build an https://docs.kernel.org/admin-guide/initrd.html[initial RAM disk]
+or "initrd" for short.
+
+It is important to understand that the initrd is generated
+at *build time* and included in the container image in
+`/usr/lib/modules/$kver/initramfs.img`
+
+== Modifying and regenerating the initrd
+
+=== Writing drop-in configuration
+
+Dracut supports "drop-in" config files; per the configuration
+guidance prefer using the location in `/usr`, which is
+`/usr/lib/dracut/dracut.conf.d`.
+
+A configuration drop-in similar to the following can be
+placed into e.g. `/usr/lib/dracut/dracut.conf.d/50-custom-added-modules.conf`:
+
+[source]
+----
+dracutmodules+=" somemodule "
+----
+
+=== Regenerating the initrd
+
+An invocation similar to the following will regenerate the initrd:
+
+[source]
+----
+RUN set -x; kver=$(cd /usr/lib/modules && echo *); dracut -vf /usr/lib/modules/$kver/initramfs.img $kver
+----
+
+Note that we must explicitly pass dracut the kernel version
+to target; the default will attempt to pull the *running*
+kernel version which is almost always the incorrect thing to do.
+
+
+
+
