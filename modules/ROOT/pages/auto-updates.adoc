@@ -1,10 +1,20 @@
 = Auto-Updates and Manual Rollbacks
 
-Fedora bootc provides atomic updates and rollbacks via https://github.com/containers/bootc[bootc] deployments.
+== bootc
+
+Fedora bootc provides atomic updates and rollbacks via https://github.com/containers/bootc[bootc] deployments
+for the host system.
 
 By default, the OS performs continual auto-updates via a stock copy of the upstream
 `bootc-fetch-apply-updates.timer` and corresponding `bootc-fetch-apply-updates.service`.
 
 For more, see <https://containers.github.io/bootc/man-md/bootc-fetch-apply-updates-service.html>
+
+== podman
+
+Additionally for referenced application containers, the
+https://docs.podman.io/en/latest/markdown/podman-auto-update.1.html[podman-auto-update.timer]
+unit can be enabled to automatically upgrade workload container images that
+are explicitly configured to opt-in to automatic updates.
 
 include::manual-rollbacks.adoc[leveloffset=1]
