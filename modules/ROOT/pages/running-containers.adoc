@@ -8,29 +8,96 @@ Per the https://containers.github.io/bootc/building/guidance.html#configuration[
 prefer using `/usr/lib/containers/systemd` for including "static" container images that are launched
 dynamically.
 
-== Example configuration
+== Example configuration (caddy)
 
-The following Butane config snippet configures the systemd `hello.service` to run https://www.busybox.net[busybox].
+The following configures the systemd `caddy.service` to run https://www.busybox.net[busybox].
+
+This is one of several examples in https://gitlab.com/bootc-org/examples[Fedora bootc examples].
 
 https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html[Podman systemd] is functionality included in podman that allows starting containers via systemd using a systemd generator.
 
 [source,text]
 ----
-$ cat /usr/lib/containers/systemd/hello.image
+$ cat /usr/lib/containers/systemd/caddy.image
 [Image]
-Name=docker.io/busybox
-$ cat /usr/lib/containers/systemd/hello.container
+Name=docker.io/library/caddy
+$ cat /usr/lib/containers/systemd/caddy.container
 [Unit]
-Description=Hello Service
-Wants=network-online.target
-After=network-online.target
+Description=Run a demo webserver
+
 [Container]
-ContainerName=busybox1
-Image=docker.io/busybox
-Exec=/bin/sh -c "trap 'exit 0' INT TERM; while true; do echo Hello World; sleep 1; done"
+# This image happens to be multiarch and somewhat maintained
+Image=docker.io/library/caddy
+PublishPort=80:80
+AutoUpdate=registry
+
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 ----
 
-== Lifecycling and updating containers
+== Lifecycling and updating containers (separate)
 
+Note that that the example above uses an implicit floating `:latest`
+tag.  When configured this way, by default the specified image will be pulled
+once at install time and not updated thereafter.  This is rarely
+desirable; however, the choice of how to update the application
+containers is one that needs to be designed to match the specific
+workload.
+
+=== Note: Images are still separate
+
+In all models described below, the "application" containers
+are pushed and managed separately from the base bootc image.
+They are fetched dynamically over the network - or in other
+words, they are "physically" distinct from the base bootc image.
+
+See xref:embedding-containers.adoc[Embedding containers] for
+a model where the application workloads are physically embedded
+in the base bootc image.
+
+=== Lifecycle binding containers by default via tags or digests
+
+Instead of referencing a container by a generic floating tag
+such as `:latest`, instead you can include dedicated versioned
+tags or `sha256` digest inside the referenced container image.
+
+The example `caddy` container has tags of the form `:2.6`, `:2.7`
+etc.  If you specify one of those via e.g.
+
+```
+Image=docker.io/library/caddy:2.7
+```
+
+Then you can change them in your "base bootc" container image definition,
+and have them updated transactionally at the same time as
+the host system.
+
+The state of the system (including these workload containers) is then describeable via the single
+base bootc container image.
+
+=== Enabling asynchronous automatic updates for container images
+
+In many cases however, you will want the ability to have at least some
+application containers "float" versions distinct from the host system. 
+
+The https://docs.podman.io/en/latest/markdown/podman-auto-update.1.html[podman-auto-update.timer]
+unit can be enabled to automatically upgrade workload container images that
+are explicitly configured to opt-in to automatic updates.
+
+=== Out of band management (pull)
+
+Yet another common pattern is to contact a remote network server
+for dynamic configuration state.  This is effectively how https://kubernetes.io/[Kubernetes]
+operates - the API server defines the desired state of the system,
+and machines reconcile to that state.
+
+In this model, you may either include code directly embedded in your base
+image or a privileged container that contacts the remote network server for configuration,
+and itself spawns further container images (for example, via the https://docs.podman.io/en/latest/_static/api.html[podman API]).
+
+=== Out of band management (push)
+
+Instead of a "pull" based model, at least some workloads may
+best match a "push" model, as implemented by tooling such as
+https://www.ansible.com/[Ansible].  For example, there is
+an https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_container_module.html[Ansible podman module].

@@ -1,0 +1,17 @@
+= Embedding Containers
+
+== Introduction
+
+Fedora bootc ships with https://podman.io[podman] installed to run application containers.
+
+This document describes a pattern for physically embedding containers inside the base
+bootc container image.  At runtime, they have a distinct root filesystem, but
+the client system only fetches and processes the base bootc image.
+
+See xref:running-containers.adoc[Running containers] for
+a model where the application workloads are instead "floating" and can
+be updated and versioned distinct from the base bootc image.
+
+== Example configuration 
+
+TODO - this is being debated/tracked https://github.com/CentOS/centos-bootc/issues/282[in this issue] for now.

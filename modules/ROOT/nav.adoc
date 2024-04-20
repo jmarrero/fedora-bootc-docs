@@ -10,6 +10,7 @@
 ** xref:sysconfig-network-configuration.adoc[Network Configuration]
 ** xref:sysctl.adoc[Kernel Tuning]
 ** xref:running-containers.adoc[Running Containers]
+** xref:embedding-containers.adoc[Embedding Containers]
 ** xref:hostname.adoc[Setting a Hostname]
 ** xref:proxy.adoc[Proxied Internet Access]
 ** xref:sysconfig-setting-keymap.adoc[Setting Keyboard Layout]
