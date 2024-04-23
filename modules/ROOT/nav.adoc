@@ -1,28 +1,2 @@
 * xref:getting-started.adoc[Getting Started]
-* Available Containers
-** xref:base-images.adoc[Base images]
-* Provisioning machines
-** xref:bare-metal.adoc[Installing on Bare Metal]
-** xref:provisioning-aws.adoc[Installing on AWS]
-* System Configuration
-** xref:authentication.adoc[Configuring Users and Groups]
-** xref:storage.adoc[Configuring Storage]
-** xref:sysconfig-network-configuration.adoc[Network Configuration]
-** xref:sysctl.adoc[Kernel Tuning]
-** xref:running-containers.adoc[Running Containers]
-** xref:embedding-containers.adoc[Embedding Containers]
-** xref:hostname.adoc[Setting a Hostname]
-** xref:proxy.adoc[Proxied Internet Access]
-** xref:sysconfig-setting-keymap.adoc[Setting Keyboard Layout]
-** xref:kernel-args.adoc[Modifying Kernel Arguments]
-** xref:initramfs.adoc[The initial RAM disk (initrd)]
-** xref:counting.adoc[Node counting]
-* OS updates
-** xref:auto-updates.adoc[Auto-Updates]
-** xref:bootloader-updates.adoc[Bootloader Updates]
-* Troubleshooting
-** xref:manual-rollbacks.adoc[Manual Rollbacks]
-** xref:access-recovery.adoc[Access Recovery]
-* Reference pages
-* Projects documentation
-** https://github.com/containers/bootc[bootc]
+
